@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ListVenues from './ListVenues'
+import Map from './Map'
 import './App.css';
 
 class App extends Component {
@@ -10,6 +11,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <ListVenues />
+        <Map />
        </div>
     );
   }
