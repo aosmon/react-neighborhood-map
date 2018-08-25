@@ -7,8 +7,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+
         <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
+          <button id="sidebarToggler" aria-pressed="false" aria-expanded="false" aria-label="Sidebar button" onclick="toggleSidebar()">
+            &#9776;
+          </button>
+          <h1 className="App-title">Neighborhood Map</h1>
         </header>
         <ListVenues />
         <Map />
