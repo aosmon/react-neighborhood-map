@@ -4,7 +4,7 @@ class ListVenues extends Component {
 
 	render(){
 		return (
-			<div className='list-venues'>
+			<section className='venues-list-container'>
 				<div className='list-venues-top'>
 
 				</div>
@@ -13,7 +13,7 @@ class ListVenues extends Component {
 					Test
 					</li>
 				</ul>
-			</div>
+			</section>
 		)
 	}
 }
