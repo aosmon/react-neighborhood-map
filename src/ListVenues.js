@@ -8,10 +8,12 @@ class ListVenues extends Component {
 				<div className='list-venues-top'>
 
 				</div>
-				<ul id="venues-list">
-					<li className='venue-list-item'>
-					Test
-					</li>
+				<ul className="venues-list">
+					{this.props.venues.map((venue)=>(
+						<li key='venue.id' className='venue-list-item'>
+							{venue.name}
+						</li>
+					))}
 				</ul>
 			</section>
 		)
