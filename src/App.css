@@ -51,7 +51,7 @@ h1 {
 /* ================== List Venues =================== */
 .venues-list-container{
     height: 100%;
-    width: 250px;
+    width: 0;
     position: fixed;
     z-index: 1;
     top: 60px;
@@ -60,7 +60,9 @@ h1 {
     overflow-x: hidden;
     transition: 0.5s;
     padding: 5px;
-
+}
+.venues-list-container.open{
+  width: 250px;
 }
 .venues-list{
   list-style: outside none none;

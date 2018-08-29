@@ -13,12 +13,12 @@ class Map extends Component {
    		));
 
 		return(
-			<section className='map-container'>
+			
         		<GoogleMapComponent
           			containerElement={ <div style={{ height: `100%`, width: '100%' }} /> }
           			mapElement={ <div style={{ height: `100%` }} /> }
         		/>
-      		</section>
+      		
 		)
 	}
 }

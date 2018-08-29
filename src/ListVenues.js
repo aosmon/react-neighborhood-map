@@ -27,7 +27,7 @@ class ListVenues extends Component {
 			))
 
 		return (
-			<section className='venues-list-container'>
+			<div>
 				<div className='list-venues-top'>
 					<input className='search-values'
 						type='text'
@@ -51,7 +51,7 @@ class ListVenues extends Component {
 						</li>
 					))}
 				</ul>
-			</section>
+			</div>
 		)
 	}
 }
