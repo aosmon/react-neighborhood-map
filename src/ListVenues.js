@@ -46,7 +46,7 @@ class ListVenues extends Component {
 
 				<ul className="venues-list">
 					{showingVenues.map((venue)=>(
-						<li key='venue.id' className='venue-list-item'>
+						<li key={venue.name} className='venue-list-item'>
 							{venue.name}
 						</li>
 					))}
