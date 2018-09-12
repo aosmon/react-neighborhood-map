@@ -8,6 +8,8 @@ class App extends Component {
 
   state = {
     sidebarVisible: true,
+    markers: [],
+    query: ''
   }
 
   toggleSidebar = () => {
@@ -16,7 +18,24 @@ class App extends Component {
     }))
   }
 
+  updateQuery = (query) => {
+    this.setState(()=>({
+      query: query.trim()
+    }))
+  }
+
+  clearQuery = () => {
+    this.updateQuery('')
+  }
+
   render() {
+    const { query } = this.state
+
+    const showingVenues = query === ''
+      ? venues
+      : venues.filter((v) => (
+        v.name.toLowerCase().includes(query.toLowerCase())
+    ))  
 
     return (
 
@@ -30,10 +49,26 @@ class App extends Component {
         </header>
         <main>
           <section className={this.state.sidebarVisible?'venues-list-container open': 'venues-list-container'}>
-          <ListVenues venues={venues}/>
+          <div className='list-venues-top'>
+          <input className='search-values'
+            type='text'
+            placeholder='Search Venues'
+            value={query}
+            onChange={(event)=> this.updateQuery(event.target.value)}
+          />
+        </div>
+
+        {showingVenues.length !== venues.length && (
+          <div className='showing-venues'>
+            <span>Now showing {showingVenues.length} of {venues.length}</span>
+            <button onClick={this.clearQuery}> Show all </button>
+          </div>
+        )}
+
+          <ListVenues venues={venues} query={this.state.query}/>
           </section>
           <section className='map-container' style={this.state.sidebarVisible?{marginLeft: '250px'}:{marginLeft: '0'}}>
-            <Map />
+            <Map venues={venues}  query={this.state.query}/>
           </section>
         </main>
        </div>

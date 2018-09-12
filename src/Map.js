@@ -1,14 +1,47 @@
 import React, {Component} from 'react'
 
+let markers = [];
+let map = {};
+
 class Map extends Component {
 
   componentDidMount() {   
     let self = this;
+
+    const {venues} = this.props;
+      
     loadScript("https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB9fNq9GDTrseLddWuSLl2xS44uReyBH7k", function() {
-      console.log('ready to render', self);
+      
       self.map = new window.google.maps.Map(self.refs.map, { center: {lat: 41.8986, lng: 12.4769},  zoom: 13 });
+      
+      venues.map((venue)=>{
+        const marker = new window.google.maps.Marker({
+          position: venue.latlng,
+          title: venue.name,
+          map: self.map,
+          animation: window.google.maps.Animation.DROP}
+        );
+        markers.push(marker);
+        return marker;
+      })
     });
-}   
+  }   
+
+  componentDidUpdate() {
+    let self = this;
+
+    const {venues, query} = this.props;
+
+    if(query !== ''){
+      markers.forEach((marker)=>{marker.setMap(null)});
+      markers.filter((m) => (
+        m.title.toLowerCase().includes(query.toLowerCase())
+      )).map((m)=>{
+        m.setMap(self.map)
+      })  
+
+    }
+  }
 
 	render(){
 
@@ -26,7 +59,7 @@ class Map extends Component {
 
 function loadScript(url, callback)
 {
-    // Adding the script tag to the head as suggested before
+    // Adding the script tag to the head
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
     script.type = 'text/javascript';
