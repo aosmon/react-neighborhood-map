@@ -21,6 +21,10 @@ class Map extends Component {
           map: self.map,
           animation: window.google.maps.Animation.DROP}
         );
+        marker.addListener('click', function(){
+          marker.setAnimation(window.google.maps.Animation.BOUNCE);
+          setTimeout(function(){marker.setAnimation(null);}, 3000);
+        });
         markers.push(marker);
         return marker;
       })
@@ -42,6 +46,8 @@ class Map extends Component {
 
     }
   }
+
+
 
 	render(){
 
