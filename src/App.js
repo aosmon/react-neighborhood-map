@@ -28,6 +28,12 @@ class App extends Component {
     this.updateQuery('')
   }
 
+  addMarkers = (m) => {
+    this.setState(()=>({
+      markers: m
+    }))
+  }
+
   render() {
     const { query } = this.state
 
@@ -65,10 +71,10 @@ class App extends Component {
           </div>
         )}
 
-          <ListVenues venues={venues} query={this.state.query}/>
+          <ListVenues venues={venues} query={this.state.query} markers={this.state.markers}/>
           </section>
           <section className='map-container' style={this.state.sidebarVisible?{marginLeft: '250px'}:{marginLeft: '0'}}>
-            <Map venues={venues}  query={this.state.query}/>
+            <Map venues={venues}  query={this.state.query} addMarkers={this.addMarkers}/>
           </section>
         </main>
        </div>

@@ -2,10 +2,17 @@ import React, {Component} from 'react'
 
 class ListVenues extends Component {
 
+	selectVenue = (name)=>{
+
+		const {venues, query, markers} = this.props
+		let selected = markers.filter((m)=>m.title===name);
+		//console.log(markers);
+		window.google.maps.event.trigger(selected[0], 'click');
+	}
 
 	render(){
 
-		const {venues, query} = this.props
+		const {venues, query, markers} = this.props
 
 	    const showingVenues = query === ''
 	      ? venues
@@ -17,7 +24,7 @@ class ListVenues extends Component {
 			<div>
 				<ul className="venues-list">
 					{showingVenues.map((venue)=>(
-						<li key={venue.name} className='venue-list-item'>
+						<li key={venue.name} className='venue-list-item' onClick={()=>this.selectVenue(venue.name)}>
 							{venue.name}
 						</li>
 					))}

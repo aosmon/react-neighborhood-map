@@ -8,7 +8,7 @@ class Map extends Component {
   componentDidMount() {   
     let self = this;
 
-    const {venues} = this.props;
+    const {venues, addMarkers} = this.props;
       
     loadScript("https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB9fNq9GDTrseLddWuSLl2xS44uReyBH7k", function() {
       
@@ -28,6 +28,7 @@ class Map extends Component {
         markers.push(marker);
         return marker;
       })
+      addMarkers(markers);
     });
   }   
 
@@ -40,9 +41,7 @@ class Map extends Component {
       markers.forEach((marker)=>{marker.setMap(null)});
       markers.filter((m) => (
         m.title.toLowerCase().includes(query.toLowerCase())
-      )).map((m)=>{
-        m.setMap(self.map)
-      })  
+      )).map((m)=>(m.setMap(self.map)))  
 
     }
   }
