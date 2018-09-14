@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 
 let markers = [];
-let map = {};
 
 class Map extends Component {
 
@@ -13,7 +12,11 @@ class Map extends Component {
     loadScript("https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB9fNq9GDTrseLddWuSLl2xS44uReyBH7k", function() {
       
       self.map = new window.google.maps.Map(self.refs.map, { center: {lat: 41.8986, lng: 12.4769},  zoom: 13 });
-      
+      self.infowindow = new window.google.maps.InfoWindow({
+        content: "",
+        maxWidth: 100
+      });
+
       venues.map((venue)=>{
         const marker = new window.google.maps.Marker({
           position: venue.latlng,
@@ -23,7 +26,9 @@ class Map extends Component {
         );
         marker.addListener('click', function(){
           marker.setAnimation(window.google.maps.Animation.BOUNCE);
-          setTimeout(function(){marker.setAnimation(null);}, 3000);
+          setTimeout(function(){marker.setAnimation(null);}, 1000);
+          self.infowindow.setContent(venue.name);
+          self.infowindow.open(self.map, marker);
         });
         markers.push(marker);
         return marker;
@@ -35,7 +40,7 @@ class Map extends Component {
   componentDidUpdate() {
     let self = this;
 
-    const {venues, query} = this.props;
+    const {query} = this.props;
 
     if(query !== ''){
       markers.forEach((marker)=>{marker.setMap(null)});
