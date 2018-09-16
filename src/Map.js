@@ -16,6 +16,7 @@ class Map extends Component {
         content: "",
         maxWidth: 200
       });
+      self.bounds = new window.google.maps.LatLngBounds();
 
       venues.map((venue)=>{
         const marker = new window.google.maps.Marker({
@@ -30,6 +31,8 @@ class Map extends Component {
           setTimeout(function(){marker.setAnimation(null);}, 1000);
           self.infowindow.open(self.map, marker);
         });
+        self.bounds.extend(marker.position);
+        self.map.fitBounds(self.bounds);
         markers.push(marker);
         return marker;
       })
@@ -54,7 +57,7 @@ class Map extends Component {
 	render(){
 		return(
 
-			<div style={{ height: `100%`, width: '100%' }}>
+			<div style={{ height: `100%`, width: '80%', marginLeft: '250px' }}>
 				<div ref="map"  style={{ height: `100%` }}>
 				hello
 				</div>
