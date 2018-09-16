@@ -9,8 +9,7 @@ class App extends Component {
   state = {
     sidebarVisible: true,
     markers: [],
-    query: '',
-    infowindow: {}
+    query: ''
   }
 
   toggleSidebar = () => {
@@ -35,10 +34,37 @@ class App extends Component {
     }))
   }
 
-  addInfoWindow = (i) => {
-    this.setState(()=>({
-      infowindow: i
-    }))
+  getInfo = (marker, infowindow) => {
+    let position = marker.getPosition().lat() + ',' + marker.getPosition().lng();
+    let name = marker.title;
+    let description = '';  
+    fetch('https://api.foursquare.com/v2/venues/explore?client_id=ECBUXCUS5KK1HZKQVKUSYS2HXWTRDB1BTVJMSMS1HE4LWKXU&client_secret=UNTBSGDHF24PTCZW0MBTMOPDYNGEC24XOKB3F0WN4IYL42N5&v=20180323&limit=1&ll='+position+'&query='+name)
+    .then(response => response.json())
+    .then(function(data){
+      let venueID = data.response.groups[0].items[0].venue.id;
+      let photoURL = "";
+      fetch('https://api.foursquare.com/v2/venues/'+venueID+'?client_id=ECBUXCUS5KK1HZKQVKUSYS2HXWTRDB1BTVJMSMS1HE4LWKXU&client_secret=UNTBSGDHF24PTCZW0MBTMOPDYNGEC24XOKB3F0WN4IYL42N5&v=20180323')
+        .then(response => response.json())
+        .then(function(data){
+          if(data.response.venue.description){
+            description = data.response.venue.description;  
+          }
+          let photo = data.response.venue.photos.groups[1].items[0];
+          let photoURL = photo.prefix+'300x300'+photo.suffix;
+          console.log(description, photoURL);
+          infowindow.setContent(description)
+        })
+        .catch(function() {
+          description = "Unable to get venue information";
+          infowindow.setContent(description)
+        });
+    })  
+    .catch(function() {
+        description = "Unable to contact server";
+        infowindow.setContent(description)
+    });
+    //return description;
+    
   }
 
   render() {
@@ -81,7 +107,7 @@ class App extends Component {
             <ListVenues venues={venues} query={this.state.query} markers={this.state.markers} infowindow={this.state.infowindow}/>
           </section>
           <section className='map-container' style={this.state.sidebarVisible?{marginLeft: '250px'}:{marginLeft: '0'}}>
-            <Map venues={venues}  query={this.state.query} addMarkers={this.addMarkers} addInfoWindow={this.addInfoWindow}/>
+            <Map venues={venues}  query={this.state.query} addMarkers={this.addMarkers} getInfo={this.getInfo}/>
           </section>
         </main>
        </div>

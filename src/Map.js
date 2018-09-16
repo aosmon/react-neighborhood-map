@@ -7,14 +7,14 @@ class Map extends Component {
   componentDidMount() {   
     let self = this;
 
-    const {venues, addMarkers} = this.props;
+    const {venues, addMarkers, getInfo} = this.props;
       
     loadScript("https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB9fNq9GDTrseLddWuSLl2xS44uReyBH7k", function() {
       
       self.map = new window.google.maps.Map(self.refs.map, { center: {lat: 41.8986, lng: 12.4769},  zoom: 13 });
       self.infowindow = new window.google.maps.InfoWindow({
         content: "",
-        maxWidth: 100
+        maxWidth: 200
       });
 
       venues.map((venue)=>{
@@ -25,9 +25,9 @@ class Map extends Component {
           animation: window.google.maps.Animation.DROP}
         );
         marker.addListener('click', function(){
+          getInfo(marker, self.infowindow);
           marker.setAnimation(window.google.maps.Animation.BOUNCE);
           setTimeout(function(){marker.setAnimation(null);}, 1000);
-          self.infowindow.setContent(venue.name);
           self.infowindow.open(self.map, marker);
         });
         markers.push(marker);
@@ -51,10 +51,7 @@ class Map extends Component {
     }
   }
 
-
-
 	render(){
-
 		return(
 
 			<div style={{ height: `100%`, width: '100%' }}>
