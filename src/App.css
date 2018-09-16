@@ -15,7 +15,7 @@ html{
 }
 /****************************/
 .App {
-  text-align: center;
+  background-color: #000;
 }
 
 .App-title {
@@ -30,6 +30,7 @@ header {
   top: 0;
   z-index: 1000;
   left: 0;
+  text-align: center;
 }
 #sidebarToggler{
   position: fixed;
@@ -70,10 +71,11 @@ h1 {
     z-index: 1;
     top: 60px;
     left: 0;
-    background-color: #111;
+    background-color: #000;
     overflow-x: hidden;
     transition: 0.5s;
     padding: 0;
+    display: block;
 }
 .venues-list-container.open{
   width: 250px;

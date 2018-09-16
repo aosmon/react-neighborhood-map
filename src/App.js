@@ -9,7 +9,7 @@ class App extends Component {
   state = {
     sidebarVisible: true,
     markers: [],
-    query: ''
+    query: ''    
   }
 
   toggleSidebar = () => {
@@ -106,8 +106,8 @@ class App extends Component {
 
             <ListVenues venues={venues} query={this.state.query} markers={this.state.markers} infowindow={this.state.infowindow}/>
           </section>
-          <section className='map-container' style={this.state.sidebarVisible?{marginLeft: '250px'}:{marginLeft: '0'}}>
-            <Map venues={venues}  query={this.state.query} addMarkers={this.addMarkers} getInfo={this.getInfo}/>
+          <section>
+            <Map venues={venues}  query={this.state.query} addMarkers={this.addMarkers} getInfo={this.getInfo} sidebarVisible={this.state.sidebarVisible}/>
           </section>
         </main>
        </div>

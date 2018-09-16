@@ -33,6 +33,7 @@ class Map extends Component {
         });
         self.bounds.extend(marker.position);
         self.map.fitBounds(self.bounds);
+        self.map.panToBounds(self.bounds);
         markers.push(marker);
         return marker;
       })
@@ -55,9 +56,10 @@ class Map extends Component {
   }
 
 	render(){
+    const {sidebarVisible} = this.props;
 		return(
 
-			<div style={{ height: `100%`, width: '80%', marginLeft: '250px' }}>
+			<div  className='map-container' style={sidebarVisible?{marginLeft: '250px', width: 'calc(100% - 250px)'}:{marginLeft: '0'}}>
 				<div ref="map"  style={{ height: `100%` }}>
 				hello
 				</div>
