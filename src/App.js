@@ -34,7 +34,7 @@ class App extends Component {
     }))
   }
 
-  getInfo = (marker, infowindow) => {
+  getInfo = (marker, infowindow, map) => {
     let position = marker.getPosition().lat() + ',' + marker.getPosition().lng();
     let name = marker.title;
     let description = '';  
@@ -51,20 +51,24 @@ class App extends Component {
           }
           let photo = data.response.venue.photos.groups[1].items[0];
           let photoURL = photo.prefix+'300x300'+photo.suffix;
-          console.log(description, photoURL);
-          infowindow.setContent(description)
+          let content = '<div class="venue-info"><h3>'+name+'</h3><p>'+description+'</p>';
+          content += '<img src="'+photoURL+'" alt="'+name+'"/></div>';
+          marker.content = content;
+          console.log(marker);
+          infowindow.setContent(content);
+          infowindow.open(map, marker);          
         })
         .catch(function() {
           description = "Unable to get venue information";
           infowindow.setContent(description)
+          infowindow.open(map, marker);
         });
     })  
     .catch(function() {
         description = "Unable to contact server";
         infowindow.setContent(description)
-    });
-    //return description;
-    
+        infowindow.open(map, marker);
+    });    
   }
 
   render() {

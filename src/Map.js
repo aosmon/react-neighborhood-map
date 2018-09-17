@@ -14,7 +14,7 @@ class Map extends Component {
       self.map = new window.google.maps.Map(self.refs.map, { center: {lat: 41.8986, lng: 12.4769},  zoom: 13 });
       self.infowindow = new window.google.maps.InfoWindow({
         content: "",
-        maxWidth: 200
+        maxWidth: 270
       });
       self.bounds = new window.google.maps.LatLngBounds();
 
@@ -26,10 +26,9 @@ class Map extends Component {
           animation: window.google.maps.Animation.DROP}
         );
         marker.addListener('click', function(){
-          getInfo(marker, self.infowindow);
           marker.setAnimation(window.google.maps.Animation.BOUNCE);
           setTimeout(function(){marker.setAnimation(null);}, 1000);
-          self.infowindow.open(self.map, marker);
+          getInfo(marker, self.infowindow, self.map)
         });
         self.bounds.extend(marker.position);
         self.map.fitBounds(self.bounds);

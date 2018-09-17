@@ -63,6 +63,18 @@ h1 {
   transition: margin-left .5s;
   width: 100%;
 }
+.venue-info{
+  display: flex;
+  flex-wrap: wrap;
+}
+.venue-info p{
+  margin: 5px 2px;
+  hyphens: none;
+}
+.venue-info img{
+  max-height: 150px;
+  max-width: 150px;
+}
 /* ================== List Venues =================== */
 .venues-list-container{
     height: 100%;
