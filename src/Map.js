@@ -44,7 +44,7 @@ class Map extends Component {
     let self = this;
 
     const {query} = this.props;
-
+    //Show only markers that match search
     if(query !== ''){
       markers.forEach((marker)=>{marker.setMap(null)});
       markers.filter((m) => (
@@ -58,8 +58,8 @@ class Map extends Component {
     const {sidebarVisible} = this.props;
 		return(
 
-			<div  className='map-container' style={sidebarVisible?{marginLeft: '250px', width: 'calc(100% - 250px)'}:{marginLeft: '0'}}>
-				<div ref="map"  style={{ height: `100%` }}>
+			<div className={sidebarVisible?'map-container list-open': 'map-container'}>
+				<div ref="map" id="map" role="application">
 				hello
 				</div>
 			</div>
@@ -70,19 +70,14 @@ class Map extends Component {
 
 function loadScript(url, callback)
 {
-    // Adding the script tag to the head
-    var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = url;
-
-    // Then bind the event to the callback function.
-    // There are several events for cross browser compatibility.
+    // Bind events to the callback function
     script.onreadystatechange = callback;
     script.onload = callback;
-
-    // Fire the loading
-    head.appendChild(script);
+    // Add script tag to the head
+    document.getElementsByTagName('head')[0].appendChild(script);
 }
 
 export default Map

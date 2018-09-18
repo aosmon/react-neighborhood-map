@@ -96,24 +96,31 @@ class App extends Component {
           <h1 className="App-title">Neighborhood Map</h1>
         </header>
         <main>
-          <section className={this.state.sidebarVisible?'venues-list-container open': 'venues-list-container'}>
-          <div className='list-venues-top'>
-          <input className='search-values'
-            type='text'
-            placeholder='Search Venues'
-            value={query}
-            onChange={(event)=> this.updateQuery(event.target.value)}
-          />
-        </div>
+          <section className={this.state.sidebarVisible?'venues-list-container list-open': 'venues-list-container'}>
+            <div className='list-venues-top'>
+              <input className='search-values'
+                type='text'
+                placeholder='Search Venues'
+                value={query}
+                onChange={(event)=> this.updateQuery(event.target.value)}
+                role="search"
+                aria-label="Filter/Search venues"
+              />
+            </div>
+            {showingVenues.length !== venues.length && (
+              <div className='showing-venues'>
+                <span>Now showing {showingVenues.length} of {venues.length}</span>
+                <button onClick={this.clearQuery}> Show all </button>
+              </div>
+            )}
 
-        {showingVenues.length !== venues.length && (
-          <div className='showing-venues'>
-            <span>Now showing {showingVenues.length} of {venues.length}</span>
-            <button onClick={this.clearQuery}> Show all </button>
-          </div>
-        )}
-
-            <ListVenues venues={venues} query={this.state.query} markers={this.state.markers} infowindow={this.state.infowindow}/>
+            <ListVenues 
+              venues={venues} 
+              query={this.state.query} 
+              markers={this.state.markers} 
+              infowindow={this.state.infowindow}
+              sidebarVisible={this.state.sidebarVisible}
+            />
           </section>
           <section>
             <Map venues={venues}  query={this.state.query} addMarkers={this.addMarkers} getInfo={this.getInfo} sidebarVisible={this.state.sidebarVisible}/>
