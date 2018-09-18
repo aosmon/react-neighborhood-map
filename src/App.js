@@ -37,38 +37,43 @@ class App extends Component {
   getInfo = (marker, infowindow, map) => {
     let position = marker.getPosition().lat() + ',' + marker.getPosition().lng();
     let name = marker.title;
-    let description = '';  
-    fetch('https://api.foursquare.com/v2/venues/explore?client_id=ECBUXCUS5KK1HZKQVKUSYS2HXWTRDB1BTVJMSMS1HE4LWKXU&client_secret=UNTBSGDHF24PTCZW0MBTMOPDYNGEC24XOKB3F0WN4IYL42N5&v=20180323&limit=1&ll='+position+'&query='+name)
-    .then(response => response.json())
-    .then(function(data){
-      let venueID = data.response.groups[0].items[0].venue.id;
-      let photoURL = "";
-      fetch('https://api.foursquare.com/v2/venues/'+venueID+'?client_id=ECBUXCUS5KK1HZKQVKUSYS2HXWTRDB1BTVJMSMS1HE4LWKXU&client_secret=UNTBSGDHF24PTCZW0MBTMOPDYNGEC24XOKB3F0WN4IYL42N5&v=20180323')
-        .then(response => response.json())
-        .then(function(data){
-          if(data.response.venue.description){
-            description = data.response.venue.description;  
-          }
-          let photo = data.response.venue.photos.groups[1].items[0];
-          let photoURL = photo.prefix+'300x300'+photo.suffix;
-          let content = '<div class="venue-info"><h3>'+name+'</h3><p>'+description+'</p>';
-          content += '<img src="'+photoURL+'" alt="'+name+'"/></div>';
-          marker.content = content;
-          console.log(marker);
-          infowindow.setContent(content);
-          infowindow.open(map, marker);          
-        })
-        .catch(function() {
-          description = "Unable to get venue information";
+    let description = '';
+    //
+    if(!marker.content){ 
+      fetch('https://api.foursquare.com/v2/venues/explore?client_id=ECBUXCUS5KK1HZKQVKUSYS2HXWTRDB1BTVJMSMS1HE4LWKXU&client_secret=UNTBSGDHF24PTCZW0MBTMOPDYNGEC24XOKB3F0WN4IYL42N5&v=20180323&limit=1&ll='+position+'&query='+name)
+      .then(response => response.json())
+      .then(function(data){
+        let venueID = data.response.groups[0].items[0].venue.id;
+        fetch('https://api.foursquare.com/v2/venues/'+venueID+'?client_id=ECBUXCUS5KK1HZKQVKUSYS2HXWTRDB1BTVJMSMS1HE4LWKXU&client_secret=UNTBSGDHF24PTCZW0MBTMOPDYNGEC24XOKB3F0WN4IYL42N5&v=20180323')
+          .then(response => response.json())
+          .then(function(data){
+            if(data.response.venue.description){
+              description = data.response.venue.description;  
+            }
+            let photo = data.response.venue.photos.groups[1].items[0];
+            let photoURL = photo.prefix+'300x300'+photo.suffix;
+            let content = '<div class="venue-info"><h3>'+name+'</h3><p>'+description+'</p>';
+            content += '<img src="'+photoURL+'" alt="'+name+'"/></div>';
+            marker.content = content;
+            infowindow.setContent(content);
+            infowindow.open(map, marker);          
+          })
+          .catch(function() {
+            description = "Unable to get venue information";
+            infowindow.setContent(description)
+            infowindow.open(map, marker);
+          });
+      })  
+      .catch(function() {
+          description = "Unable to contact server";
           infowindow.setContent(description)
           infowindow.open(map, marker);
-        });
-    })  
-    .catch(function() {
-        description = "Unable to contact server";
-        infowindow.setContent(description)
-        infowindow.open(map, marker);
-    });    
+      });
+    }
+    else{
+      infowindow.setContent(marker.content);
+      infowindow.open(map, marker);               
+    }   
   }
 
   render() {
