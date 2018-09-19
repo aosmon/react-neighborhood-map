@@ -14,7 +14,7 @@ html{
     -webkit-padding-start: 0;
 }
 /****************************/
-.App {
+.App, #root, body {
   background-color: #000;
 }
 
@@ -31,6 +31,9 @@ header {
   z-index: 1000;
   left: 0;
   text-align: center;
+  display: flex;
+  align-items: center;
+  margin: 0;
 }
 #sidebarToggler{
   position: fixed;
@@ -46,10 +49,41 @@ header {
 }
 h1 {
   color: #eee;
-  margin: auto 0 auto 30px;
+  margin: 0;
   width: 100%;
-  height: 60px;
   display: block;
+}
+@media screen and (max-width: 650px) {
+
+  header, h1{
+    height: 30px;
+    padding: 0;
+    margin: 0;
+  }
+  #sidebarToggler{
+    display: none;
+  }
+}
+/* ==================== Sidebar ==================== */
+.sidebar{
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 60px;
+    left: 0;
+    background-color: #000;
+    transition: 0.5s;
+    padding: 0;
+}
+.sidebar.sidebar-open{
+  width: 250px;
+}
+@media screen and (max-width: 650px) {
+  .sidebar, .sidebar.sidebar-open{
+    top: calc(50vh + 40px);
+    width: 100%;
+  }
 }
 /* ====================== Map ====================== */
 .map-container {
@@ -63,7 +97,7 @@ h1 {
   transition: margin-left .5s;
   width: 100%;
 }
-.map-container.list-open{
+.map-container.sidebar-open{
   margin-left: 0;
   width: calc(100% - 250px);
 }
@@ -82,22 +116,20 @@ h1 {
   max-height: 150px;
   max-width: 150px;
 }
+@media screen and (max-width: 650px) {
+  .map-container, .map-container.sidebar-open{
+    top: 40px;
+    width: 100%;
+    height: 70vh;
+    display: block;
+  }
+}
 /* ================== List Venues =================== */
 .venues-list-container{
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 60px;
-    left: 0;
-    background-color: #000;
-    overflow-x: hidden;
+    height: calc(100% - 70px);
+    width: 100%;
     transition: 0.5s;
-    padding: 0;
-    display: block;
-}
-.venues-list-container.list-open{
-  width: 250px;
+    overflow: scroll visible;
 }
 .venues-list{
   list-style: outside none none;
@@ -107,33 +139,53 @@ h1 {
   height: 100%;
   flex-direction: column;
   flex-wrap: nowrap;
-  display: flex;
-  overflow: scroll visible;
+  display: block;
+  /*overflow: scroll visible;*/
   transition: 0.3s;
-
 }
 .venue-list-item{
   margin: 0;
   height: 30px;
   text-align: left;
-  padding: 8px 8px 8px 20px;
+  padding: 10px 8px 10px 20px;
   color: #eee;
   display: flex;
+  align-items: center;
   transition: 0.3s;
   cursor: pointer;
 }
-.venue-list-item:hover, .venue-list-item.selected{
+.venue-list-item:hover{
   background: #333;
 }
-/* ================== Search Venues =================== */
+.venue-list-item.selected{
+  background: #eee;
+  color: #000;
+}
+.venue-list-item:focus{
+  outline: 0;
+  box-shadow: 0 0 8px 3px #ffcc0d;
+}
+@media screen and (max-width: 650px) {
+  .venues-list-container{
+    width: 100%;
+  }
+  .venues-list{
+    height: 30vh;
+    overflow-y: scroll visible;
+  }
+  .venue-list-item{
+    height: 40px;
+  }
+}
 
-.search {
+/* ================== Search Venues =================== */
+.search-venues-container{
+  width: 100%;
   height: 70px;
-  background-color: #000;;
   align-items: center;
   transition: 0.3s;
- }
-.search-values{
+}
+.search-venues{
   background-color: #fff;
   border-radius: 4px; 
   font-family: Arial,sans-serif;
@@ -168,4 +220,12 @@ input:focus, select:focus {
   border: none;
   cursor: pointer;
   font-size: inherit;
+}
+@media screen and (max-width: 650px) {
+  .search-venues-container{
+    width: 100%;
+  }
+  .search-venues{
+    width: 90%;
+  } 
 }

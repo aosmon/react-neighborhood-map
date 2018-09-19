@@ -105,9 +105,9 @@ class App extends Component {
           <h1 className="App-title">Neighborhood Map</h1>
         </header>
         <main>
-          <section className={this.state.sidebarVisible?'venues-list-container list-open': 'venues-list-container'}>
-            <div className='list-venues-top'>
-              <input className='search-values'
+          <div className={this.state.sidebarVisible?'sidebar sidebar-open': 'sidebar'}>
+            <section className='search-venues-container'>
+              <input className='search-venues'
                 type='text'
                 placeholder='Search Venues'
                 value={query}
@@ -115,14 +115,13 @@ class App extends Component {
                 role="search"
                 aria-label="Filter venues"
               />
-            </div>
-            {showingVenues.length !== venues.length && (
-              <div className='showing-venues'>
-                <span>Now showing {showingVenues.length} of {venues.length}</span>
-                <button onClick={this.clearQuery}> Show all </button>
-              </div>
-            )}
-
+              {showingVenues.length !== venues.length && (
+                <div className='showing-venues'>
+                  <span>Now showing {showingVenues.length} of {venues.length}</span>
+                  <button onClick={this.clearQuery}> Show all </button>
+                </div>
+              )}
+            </section>        
             <ListVenues 
               venues={venues} 
               query={this.state.query} 
@@ -130,9 +129,8 @@ class App extends Component {
               infowindow={this.state.infowindow}
               selectVenue={this.selectVenue}
               sidebarVisible={this.state.sidebarVisible}
-            />
-          </section>
-          <section>
+            />            
+          </div>
             <Map
               venues={venues}
               query={this.state.query}
@@ -140,7 +138,6 @@ class App extends Component {
               getInfo={this.getInfo}
               selectVenue={this.selectVenue}
               sidebarVisible={this.state.sidebarVisible}/>
-          </section>
         </main>
        </div>
     );

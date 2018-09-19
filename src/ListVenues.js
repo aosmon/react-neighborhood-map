@@ -24,7 +24,7 @@ class ListVenues extends Component {
 	    ))  
 
 		return (
-			<div>
+			<section className='venues-list-container'>
 				<ul className="venues-list" role="listbox" tabIndex="0" aria-label="List of venues">
 					{showingVenues.map((venue)=>(
 						<li key={venue.name} 
@@ -38,7 +38,7 @@ class ListVenues extends Component {
 						</li>
 					))}
 				</ul>
-			</div>
+			</section>
 		)
 	}
 }

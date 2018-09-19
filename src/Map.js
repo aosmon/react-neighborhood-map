@@ -51,19 +51,19 @@ class Map extends Component {
       markers.filter((m) => (
         m.title.toLowerCase().includes(query.toLowerCase())
       )).map((m)=>(m.setMap(self.map)))  
-
+    }else{
+      markers.forEach((marker)=>{marker.setMap(self.map)});
     }
   }
 
 	render(){
     const {sidebarVisible} = this.props;
 		return(
-
-			<div className={sidebarVisible?'map-container list-open': 'map-container'}>
+			<section className={sidebarVisible?'map-container sidebar-open': 'map-container'}>
 				<div ref="map" id="map" role="application">
 				hello
 				</div>
-			</div>
+			</section>
       		
 		)
 	}
