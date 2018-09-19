@@ -9,21 +9,19 @@ class App extends Component {
   state = {
     sidebarVisible: true,
     markers: [],
-    query: ''    
+    query: '',
+    selectedVenue: {}    
   }
-
   toggleSidebar = () => {
     this.setState((prevState)=>({
       sidebarVisible: !prevState.sidebarVisible
     }))
   }
-
   updateQuery = (query) => {
     this.setState(()=>({
       query: query.trim()
     }))
   }
-
   clearQuery = () => {
     this.updateQuery('')
   }
@@ -32,6 +30,17 @@ class App extends Component {
     this.setState(()=>({
       markers: m
     }))
+  }
+  //Select venue in the list
+  selectVenue = (m) => {
+    let options = document.querySelectorAll('[aria-selected="true"]');
+    options.forEach(function(o){
+      o.setAttribute('aria-selected', 'false');
+      o.classList.remove("selected");
+    })
+    let item = document.getElementById(m.title);
+    item.setAttribute('aria-selected', 'true');
+    item.classList.add("selected");
   }
 
   getInfo = (marker, infowindow, map) => {
@@ -104,7 +113,7 @@ class App extends Component {
                 value={query}
                 onChange={(event)=> this.updateQuery(event.target.value)}
                 role="search"
-                aria-label="Filter/Search venues"
+                aria-label="Filter venues"
               />
             </div>
             {showingVenues.length !== venues.length && (
@@ -119,11 +128,18 @@ class App extends Component {
               query={this.state.query} 
               markers={this.state.markers} 
               infowindow={this.state.infowindow}
+              selectVenue={this.selectVenue}
               sidebarVisible={this.state.sidebarVisible}
             />
           </section>
           <section>
-            <Map venues={venues}  query={this.state.query} addMarkers={this.addMarkers} getInfo={this.getInfo} sidebarVisible={this.state.sidebarVisible}/>
+            <Map
+              venues={venues}
+              query={this.state.query}
+              addMarkers={this.addMarkers}
+              getInfo={this.getInfo}
+              selectVenue={this.selectVenue}
+              sidebarVisible={this.state.sidebarVisible}/>
           </section>
         </main>
        </div>

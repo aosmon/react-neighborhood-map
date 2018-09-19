@@ -7,7 +7,7 @@ class Map extends Component {
   componentDidMount() {   
     let self = this;
 
-    const {venues, addMarkers, getInfo} = this.props;
+    const {venues, addMarkers, getInfo, selectVenue} = this.props;
       
     loadScript("https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB9fNq9GDTrseLddWuSLl2xS44uReyBH7k", function() {
       
@@ -28,6 +28,7 @@ class Map extends Component {
         marker.addListener('click', function(){
           marker.setAnimation(window.google.maps.Animation.BOUNCE);
           setTimeout(function(){marker.setAnimation(null);}, 1000);
+          selectVenue(marker);
           getInfo(marker, self.infowindow, self.map)
         });
         self.bounds.extend(marker.position);

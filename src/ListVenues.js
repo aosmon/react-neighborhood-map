@@ -2,13 +2,15 @@ import React, {Component} from 'react'
 
 class ListVenues extends Component {
 
-	selectVenue = (e, name)=>{
+	//Select venue and trigger marker when clicked on the list item
+	selectMarker = (name)=>{
+
+		let {selectVenue} = this.props;
+
 		const {markers} = this.props
 		let selected = markers.filter((m)=>m.title===name);
-		let options = document.querySelectorAll('[aria-selected="true"]');
-		options.forEach(function(o){o.setAttribute('aria-selected', 'false');})
-		e.target.setAttribute('aria-selected', 'true');
 		window.google.maps.event.trigger(selected[0], 'click');
+		selectVenue(selected[0]);
 	}
 
 	render(){
@@ -26,8 +28,9 @@ class ListVenues extends Component {
 				<ul className="venues-list" role="listbox" tabIndex="0" aria-label="List of venues">
 					{showingVenues.map((venue)=>(
 						<li key={venue.name} 
+							id={venue.name}
 							className='venue-list-item' 
-							onClick={(e)=>this.selectVenue(e, venue.name)}
+							onClick={(e)=>this.selectMarker(venue.name)}
 							tabIndex={sidebarVisible ? "0" : "-1"}
 							role="option"
 							aria-selected="false">
