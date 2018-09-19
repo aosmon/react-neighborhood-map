@@ -112,6 +112,15 @@ h1 {
   margin: 5px 2px;
   hyphens: none;
 }
+.venue-info p:after{
+  background-image: url(powered-by-foursquare-grey.svg);
+  width: 100%;
+  height: 10px;
+  content: '';
+  display: block;
+  margin: 10px 0 0 0;
+  background-repeat: no-repeat;
+}
 .venue-info img{
   max-height: 150px;
   max-width: 150px;
@@ -134,13 +143,12 @@ h1 {
 .venues-list{
   list-style: outside none none;
   margin: 15px 0 0 0;
-  padding: 0;
+  padding: 0 0 15px 0;
   text-align: left;
   height: 100%;
   flex-direction: column;
   flex-wrap: nowrap;
   display: block;
-  /*overflow: scroll visible;*/
   transition: 0.3s;
 }
 .venue-list-item{

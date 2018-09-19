@@ -68,13 +68,13 @@ class App extends Component {
             infowindow.open(map, marker);          
           })
           .catch(function() {
-            description = "Unable to get venue information";
+            description = '<div class="venue-info"><p>Unable to get venue information</p></div>';
             infowindow.setContent(description)
             infowindow.open(map, marker);
           });
       })  
       .catch(function() {
-          description = "Unable to contact server";
+          description = '<div class="venue-info"><p>Unable to contact the server</p></div>';
           infowindow.setContent(description)
           infowindow.open(map, marker);
       });
