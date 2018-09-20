@@ -24,7 +24,8 @@ This project was built from scratch, without any existing starter code to rely o
 3. Start the development server with `yarn start`.
 4. A new browser window should automatically open. If not, open any browser and visit the site: `http://localhost:3000`.
 
-## How to run in the production mode (required for the serviceworker to cache files and run offline)
+## How to run in the production mode 
+(required for the serviceworker to cache files and run offline)
 1. Fork and clone this repository.
 2. Open terminal in the project directory.
 3. Create a production build using `yarn build`.
