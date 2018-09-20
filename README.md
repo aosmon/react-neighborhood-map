@@ -32,9 +32,9 @@ This project was built from scratch, without any existing starter code to rely o
 1. Fork and clone this repository.
 2. Open terminal in the project directory.
 3. Create a production build using 
-        ```
-        yarn build
-        ```
+```
+yarn build
+```
 3. Serve application with a static server
         ```
         yarn global add serve
