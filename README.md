@@ -21,7 +21,8 @@ This project was built from scratch, without any existing starter code to rely o
 ## How to run in the development mode
 1. Fork and clone this repository.
 2. Open terminal in the project directory.
-3. Start the development server with `yarn start`.
+3. Start the development server with 
+        `yarn start`.
 4. A new browser window should automatically open. If it does not, open any browser and visit the site: `http://localhost:3000`.
 
 ## How to run in the production mode 
@@ -29,8 +30,8 @@ This project was built from scratch, without any existing starter code to rely o
 1. Fork and clone this repository.
 2. Open terminal in the project directory.
 3. Create a production build using 
-    - `yarn build`.
+        `yarn build`.
 3. Serve application with a static server
-    -  `yarn global add serve`
-    - `serve -s build`
+        `yarn global add serve`
+        `serve -s build`
 4. A new browser window should automatically open. If it does not, open any browser and visit the site: `http://localhost:5000`.
