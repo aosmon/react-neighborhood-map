@@ -4,6 +4,10 @@ let markers = [];
 
 class Map extends Component {
 
+state = {
+  mapError: false
+}
+
   componentDidMount() {   
     let self = this;
 
@@ -38,7 +42,13 @@ class Map extends Component {
         return marker;
       })
       addMarkers(markers);
-    });
+    }, this.onMapError());
+  }
+
+  onMapError = () => {
+    this.setState(()=>({
+      mapError: true
+    }))    
   }   
 
   componentDidUpdate() {
@@ -61,7 +71,11 @@ class Map extends Component {
 		return(
 			<section className={sidebarVisible?'map-container sidebar-open': 'map-container'}>
 				<div ref="map" id="map" role="application">
-				hello
+          {this.state.mapError && (
+            <div className="map-error" role="alert">
+              Unable to load Google Maps. Please try again later.
+            </div>
+          )}
 				</div>
 			</section>
       		
@@ -69,7 +83,7 @@ class Map extends Component {
 	}
 }
 
-function loadScript(url, callback)
+function loadScript(url, callback, onError)
 {
     var script = document.createElement('script');
     script.type = 'text/javascript';
@@ -77,6 +91,9 @@ function loadScript(url, callback)
     // Bind events to the callback function
     script.onreadystatechange = callback;
     script.onload = callback;
+    script.onError = onError;
+    script.defer = true;
+    script.async = true;
     // Add script tag to the head
     document.getElementsByTagName('head')[0].appendChild(script);
 }
