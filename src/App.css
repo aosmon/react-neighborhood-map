@@ -189,7 +189,6 @@ h1 {
   }
   .venues-list{
     overflow-y: scroll visible;
-    margin: 0;
   }
   .venue-list-item{
     height: 40px;
@@ -238,6 +237,7 @@ input:focus, select:focus {
   border: none;
   cursor: pointer;
   font-size: inherit;
+  margin: 0 0 0 10px;
 }
 @media screen and (max-width: 650px) {
   .search-venues-container{
