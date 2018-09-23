@@ -42,7 +42,7 @@ state = {
         return marker;
       })
       addMarkers(markers);
-    }, this.onMapError());
+    }, this.onMapError);
   }
 
   onMapError = () => {

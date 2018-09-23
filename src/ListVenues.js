@@ -13,6 +13,29 @@ class ListVenues extends Component {
 		selectVenue(selected[0]);
 	}
 
+	handleKeyDown = (e) => {
+		e.preventDefault();
+		var key = e.which || e.keyCode;
+		switch(key){
+			case 40:
+				let next = e.target.nextElementSibling;
+				if(next){
+					next.focus();
+				}
+				break;
+			case 38:
+				let prev = e.target.previousElementSibling;
+				if(prev){
+					prev.focus();
+				}
+				break;
+			case 13:
+				this.selectMarker(e.target.id);
+				break;
+			default:
+		}
+	}
+
 	render(){
 
 		const {venues, query, sidebarVisible} = this.props
@@ -31,6 +54,7 @@ class ListVenues extends Component {
 							id={venue.name}
 							className='venue-list-item' 
 							onClick={(e)=>this.selectMarker(venue.name)}
+							onKeyDown={(e)=>this.handleKeyDown(e)}
 							tabIndex={sidebarVisible ? "0" : "-1"}
 							role="option"
 							aria-selected="false">
