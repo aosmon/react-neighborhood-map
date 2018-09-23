@@ -17,6 +17,7 @@ This project was built from scratch, without any existing starter code to rely o
 - React API https://reactjs.org
 - Google Maps API https://cloud.google.com/maps-platform/
 - FourSquare API https://developer.foursquare.com
+- Accessibility https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-scrollable.html
 
 ## How to run in the development mode
 1. Fork and clone this repository.
