@@ -91,7 +91,7 @@ function loadScript(url, callback, onError)
     // Bind events to the callback function
     script.onreadystatechange = callback;
     script.onload = callback;
-    script.onError = onError;
+    script.onerror = onError;
     script.defer = true;
     script.async = true;
     // Add script tag to the head
