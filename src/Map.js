@@ -12,44 +12,51 @@ state = {
     let self = this;
 
     const {venues, addMarkers, getInfo, selectVenue} = this.props;
+    let {mapError} = this.state;
       
     loadScript("https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB9fNq9GDTrseLddWuSLl2xS44uReyBH7k", function() {
       
-      self.map = new window.google.maps.Map(self.refs.map, { center: {lat: 41.8986, lng: 12.4769},  zoom: 13 });
-      self.infowindow = new window.google.maps.InfoWindow({
-        content: "",
-        maxWidth: 270
-      });
-      self.bounds = new window.google.maps.LatLngBounds();
+      window.gm_authFailure = function() {
+        alert('Unable to load Google Maps. To get a valid Google Maps API key, visit https://developers.google.com/maps/documentation/javascript/get-api-key')
+      }
 
-      venues.map((venue)=>{
-        const marker = new window.google.maps.Marker({
-          position: venue.latlng,
-          title: venue.name,
-          map: self.map,
-          animation: window.google.maps.Animation.DROP}
-        );
-        marker.addListener('click', function(){
-          marker.setAnimation(window.google.maps.Animation.BOUNCE);
-          setTimeout(function(){marker.setAnimation(null);}, 1000);
-          selectVenue(marker);
-          getInfo(marker, self.infowindow, self.map)
+      if(!mapError) {
+        self.map = new window.google.maps.Map(self.refs.map, { center: {lat: 41.8986, lng: 12.4769},  zoom: 13 });
+        self.infowindow = new window.google.maps.InfoWindow({
+          content: "",
+          maxWidth: 270
         });
-        self.bounds.extend(marker.position);
-        self.map.fitBounds(self.bounds);
-        self.map.panToBounds(self.bounds);
-        markers.push(marker);
-        return marker;
-      })
-      addMarkers(markers);
-    }, this.onMapError);
+        self.bounds = new window.google.maps.LatLngBounds();
+
+        venues.map((venue)=>{
+          const marker = new window.google.maps.Marker({
+            position: venue.latlng,
+            title: venue.name,
+            map: self.map,
+            animation: window.google.maps.Animation.DROP}
+          );
+          marker.addListener('click', function(){
+            marker.setAnimation(window.google.maps.Animation.BOUNCE);
+            setTimeout(function(){marker.setAnimation(null);}, 1000);
+            selectVenue(marker);
+            getInfo(marker, self.infowindow, self.map)
+          });
+          self.bounds.extend(marker.position);
+          self.map.fitBounds(self.bounds);
+          self.map.panToBounds(self.bounds);
+          markers.push(marker);
+          return marker;
+        })
+        addMarkers(markers);
+      }
+    }, this.onMapError)
   }
 
   onMapError = () => {
     this.setState(()=>({
-      mapError: true
+      mapError: true,
     }))    
-  }   
+  }
 
   componentDidUpdate() {
     let self = this;
@@ -73,7 +80,7 @@ state = {
 				<div ref="map" id="map" role="application">
           {this.state.mapError && (
             <div className="map-error" role="alert">
-              Unable to load Google Maps. Please try again later.
+              'Unable to load Google Maps. Please try again later.'
             </div>
           )}
 				</div>
